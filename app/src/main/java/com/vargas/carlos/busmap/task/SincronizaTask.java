@@ -25,7 +25,7 @@ public class SincronizaTask extends AsyncTask<Integer, Void, RetornoDTO> {
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
-        progress = ProgressDialog.show(context, "Sincronizando, aguarde...", "Sicronização de Dados", true, true);
+        progress = ProgressDialog.show(context, "Sincronizando, aguarde...", "Sincronização de Dados", true, true);
     }
 
     @Override

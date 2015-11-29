@@ -42,6 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "CONSTRAINT "+TrajetoReferenciasLinhasOnibusDAO.FK_ID_REF_LINHAS_ONIBUS+" FOREIGN KEY("+TrajetoReferenciasLinhasOnibusDAO.ID_REF_LINHAS_ONIBUS+") REFERENCES " + ReferenciasLinhasOnibusDAO.TABELA + "(" + ReferenciasLinhasOnibusDAO.ID + ") ON DELETE CASCADE" +
                 ")");
 
+        //CRIAR A TABELA DOS HORARIOS. DTO, E DAO
+
     }
 
     @Override

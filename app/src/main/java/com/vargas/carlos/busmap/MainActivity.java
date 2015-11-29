@@ -10,7 +10,6 @@ import com.vargas.carlos.busmap.adapter.ListaOnibusAdapter;
 import com.vargas.carlos.busmap.dao.LinhasOnibusDAO;
 import com.vargas.carlos.busmap.model.LinhasOnibus;
 import com.vargas.carlos.busmap.task.SincronizaTask;
-import com.vargas.carlos.busmap.utils.ConnectionCheckUtils;
 
 import java.util.List;
 
@@ -34,13 +33,12 @@ public class MainActivity extends AbstractActivity {
         }
         else {
             //se nao, verifica se a conexao de internet esta disponivel
-            ConnectionCheckUtils connectionCheckUtils = new ConnectionCheckUtils(this);
-            if (connectionCheckUtils.hasInternetConnection()) {
+            if (isConnected()) {
                 //se tiver, busca os dados da api
                 new SincronizaTask(URL, this).execute();
             }
             else {
-                //alert
+                alert();
             }
         }
     }
@@ -63,7 +61,12 @@ public class MainActivity extends AbstractActivity {
         switch (item.getItemId()) {
 
             case R.id.sincronizar:
-                new SincronizaTask(URL, this).execute();
+                if (isConnected()) {
+                    new SincronizaTask(URL, this).execute();
+                }
+                else {
+                    alert();
+                }
 
             default:
                 break;
