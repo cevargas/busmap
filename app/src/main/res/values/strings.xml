@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BusMap</string>
+    <string name="search_title">Pesquisar</string>
+    <string name="btnHorarios">Horários</string>
+    <string name="btnMapa">Mapa</string>
+    <string name="textLinhasdeOnibus">Linhas de Ônibus</string>
+</resources>
