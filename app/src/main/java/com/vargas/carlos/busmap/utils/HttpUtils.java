@@ -1,6 +1,7 @@
 package com.vargas.carlos.busmap.utils;
 
 import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -14,30 +15,35 @@ import java.net.URL;
 
 public class HttpUtils {
 
+    static URL url;
+    static HttpURLConnection http;
+    static InputStream is;
+    static Reader reader;
+
     public static Reader get(String surl) {
 
         try {
 
-            URL url = new URL(surl);
-            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            url = new URL(surl);
+            http = (HttpURLConnection) url.openConnection();
 
-            InputStream is = new BufferedInputStream(http.getInputStream());
-            Reader reader = new InputStreamReader(is);
+            is = new BufferedInputStream(http.getInputStream());
+            reader = new InputStreamReader(is);
 
             return reader;
 
         } catch (MalformedURLException e) {
-            Log.e("MAIN", "error", e);
+            Log.e("HttpUtils", "error", e);
         } catch (IOException e) {
-            Log.e("MAIN", "error", e);
+            Log.e("HttpUtils", "error", e);
         }
 
         return null;
     }
 
-    public static <T> T get(String surl, Class<T> cc){
-        Reader reader = HttpUtils.get(surl);
-        T rs =  new Gson().fromJson(reader, cc);
+    public static <T> T get(String surl, Class<T> cc) {
+        reader = HttpUtils.get(surl);
+        T rs = new Gson().fromJson(reader, cc);
         return rs;
     }
 }
