@@ -17,7 +17,7 @@ public class TrajetoReferenciasLinhasOnibusDAO {
     public static final String CENTRO = "centro";
     public static final String BAIRRO_FINAL = "bairro_final";
 
-    public static final String FK_ID_REF_LINHAS_ONIBUS = "fk__id_ref_linhas_onibus";
+    public static final String FK_ID_REF_LINHAS_ONIBUS = "fk_id_ref_linhas_onibus";
 
     private Context context;
 
@@ -41,6 +41,11 @@ public class TrajetoReferenciasLinhasOnibusDAO {
 
         db.insert(TrajetoReferenciasLinhasOnibusDAO.TABELA, null, valores);
 
+        if(r[0].horarios != null) {
+            //salva os horarios dos trajetos
+            new HorariosTrajetoReferenciasLinhasOnibusDAO(context).salvar(r[0]);
+        }
+
         Log.i("MAIN", "Salvando trajetos de referencias de linhas de onibus: " + r[0].id);
 
         db.close();
@@ -52,6 +57,7 @@ public class TrajetoReferenciasLinhasOnibusDAO {
 
         //DELETA TODOS OS DADOS, PARA INSERIR DE NOVO
         db.execSQL("DELETE FROM " + TrajetoReferenciasLinhasOnibusDAO.TABELA);
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '"+ TrajetoReferenciasLinhasOnibusDAO.TABELA +"'");
 
         Log.i("MAIN", "Deletando dados TrajetoReferenciasLinhasOnibusDAO!");
 

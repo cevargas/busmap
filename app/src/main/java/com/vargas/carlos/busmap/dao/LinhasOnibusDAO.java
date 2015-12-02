@@ -106,6 +106,7 @@ public class LinhasOnibusDAO {
 
         //DELETA TODOS OS DADOS, PARA INSERIR DE NOVO
         db.execSQL("DELETE FROM " + LinhasOnibusDAO.TABELA);
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '"+ LinhasOnibusDAO.TABELA +"'");
 
         Log.i("MAIN", "Deletando dados LinhasOnibusDAO!");
 

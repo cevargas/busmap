@@ -59,6 +59,7 @@ public class ReferenciasLinhasOnibusDAO {
 
         //DELETA TODOS OS DADOS, PARA INSERIR DE NOVO
         db.execSQL("DELETE FROM " + ReferenciasLinhasOnibusDAO.TABELA);
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '"+ ReferenciasLinhasOnibusDAO.TABELA +"'");
 
         Log.i("MAIN", "Deletando dados ReferenciasLinhasOnibusDAO!");
 

@@ -35,6 +35,7 @@ public class ListaOnibusAdapter extends ArrayAdapter<LinhasOnibus> {
 
         final LinhasOnibus listaOnibus = getItem(position);
         ((TextView) row.findViewById(R.id.textLinha)).setText(listaOnibus.getNome());
+        //((TextView) row.findViewById(R.id.textLinhaDesc)).setText(listaOnibus.getTrajeto());
 
         final Context activity = this.getContext();
 

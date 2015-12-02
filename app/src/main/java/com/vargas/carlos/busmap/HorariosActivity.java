@@ -1,7 +1,13 @@
 package com.vargas.carlos.busmap;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.widget.ListView;
+
+import com.vargas.carlos.busmap.adapter.HorariosAdapter;
+import com.vargas.carlos.busmap.dao.HorariosTrajetoReferenciasLinhasOnibusDAO;
+import com.vargas.carlos.busmap.model.HorarioTrajetoReferenciaLinhasOnibus;
+
+import java.util.List;
 
 public class HorariosActivity extends AbstractActivity {
 
@@ -15,7 +21,11 @@ public class HorariosActivity extends AbstractActivity {
         //recupera parametro passado pela outra activity, id row linhas de onibus
         final int id = getIntent().getIntExtra("idHorario", defaultValue);
 
-        showMessage("ID da Linha Onibus " + id, Toast.LENGTH_LONG);
+        List<HorarioTrajetoReferenciaLinhasOnibus> list = new HorariosTrajetoReferenciasLinhasOnibusDAO(this).listaHorarios(id);
+
+        HorariosAdapter adapter = new HorariosAdapter(this, list);
+        ListView listHorarios = (ListView) findViewById(R.id.listHorarios);
+        listHorarios.setAdapter(adapter);
 
         //seta o valor
         /*TextView getText = (TextView) findViewById(R.id.textPlaneta);
@@ -32,5 +42,4 @@ public class HorariosActivity extends AbstractActivity {
             }
         });*/
     }
-
 }

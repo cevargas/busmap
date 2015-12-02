@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    static final int VERSION = 2;
+    static final int VERSION = 3;
     private static final String DB_NAME = "busmap";
 
     public DBHelper(Context context) {
@@ -42,8 +42,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 "CONSTRAINT "+TrajetoReferenciasLinhasOnibusDAO.FK_ID_REF_LINHAS_ONIBUS+" FOREIGN KEY("+TrajetoReferenciasLinhasOnibusDAO.ID_REF_LINHAS_ONIBUS+") REFERENCES " + ReferenciasLinhasOnibusDAO.TABELA + "(" + ReferenciasLinhasOnibusDAO.ID + ") ON DELETE CASCADE" +
                 ")");
 
-        //CRIAR A TABELA DOS HORARIOS. DTO, E DAO
-
+        db.execSQL("CREATE TABLE " + HorariosTrajetoReferenciasLinhasOnibusDAO.TABELA + " (" +
+                HorariosTrajetoReferenciasLinhasOnibusDAO.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                HorariosTrajetoReferenciasLinhasOnibusDAO.ID_TRAJ_REF_LINHAS_ONIBUS + " INTEGER, " +
+                HorariosTrajetoReferenciasLinhasOnibusDAO.INICIALIZADOR + " VARCHAR(100), " +
+                HorariosTrajetoReferenciasLinhasOnibusDAO.CENTRALIZADOR + " VARCHAR(100), " +
+                HorariosTrajetoReferenciasLinhasOnibusDAO.FINALIZADOR + " VARCHAR(100), " +
+                "CONSTRAINT "+HorariosTrajetoReferenciasLinhasOnibusDAO.FK_ID_REF_LINHAS_ONIBUS+" FOREIGN KEY("+HorariosTrajetoReferenciasLinhasOnibusDAO.ID_TRAJ_REF_LINHAS_ONIBUS+") REFERENCES " + TrajetoReferenciasLinhasOnibusDAO.TABELA + "(" + TrajetoReferenciasLinhasOnibusDAO.ID + ") ON DELETE CASCADE" +
+                ")");
     }
 
     @Override
@@ -51,6 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+LinhasOnibusDAO.TABELA+"");
         db.execSQL("DROP TABLE IF EXISTS "+ReferenciasLinhasOnibusDAO.TABELA+"");
         db.execSQL("DROP TABLE IF EXISTS "+TrajetoReferenciasLinhasOnibusDAO.TABELA+"");
+        db.execSQL("DROP TABLE IF EXISTS "+HorariosTrajetoReferenciasLinhasOnibusDAO.TABELA+"");
         onCreate(db);
     }
 }
