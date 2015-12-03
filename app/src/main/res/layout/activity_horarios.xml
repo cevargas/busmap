@@ -4,11 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HorariosActivity"
-    android:baselineAligned="false">
+    android:orientation="horizontal">
 
-    <ListView
+    <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listHorarios" />
+        android:layout_height="fill_parent"
+        android:stretchColumns="0,1,2">
 
+        <TableRow android:background="@color/colorPrimaryDark" android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/textLinhasdeOnibus"
+                android:padding="5dp"
+                android:id="@+id/textLinhaOnibus"
+                android:layout_span="3"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+
+        <TableRow android:background="@color/colorSecundary" android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_inicio"
+                android:id="@+id/textInicializadorHeader"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_centro"
+                android:id="@+id/textCentralizadorHeader"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_fim"
+                android:id="@+id/textFinalizadorHeader"
+                android:layout_gravity="center_horizontal" />
+        </TableRow>
+
+        <TableRow android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:padding="5dp">
+            <ListView
+                android:layout_span="3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listHorarios"/>
+        </TableRow>
+
+    </TableLayout>
 </LinearLayout>

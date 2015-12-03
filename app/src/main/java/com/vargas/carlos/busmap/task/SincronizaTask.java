@@ -15,7 +15,6 @@ import com.vargas.carlos.busmap.utils.HttpUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SincronizaTask extends AsyncTask<Integer, Void, RetornoDTO> {
@@ -23,7 +22,6 @@ public class SincronizaTask extends AsyncTask<Integer, Void, RetornoDTO> {
     private String URL;
     private Context context;
     private ProgressDialog progress;
-    private int timer = 5000;
 
     public SincronizaTask(String URL, Context context) {
         this.URL = URL;
@@ -85,6 +83,7 @@ public class SincronizaTask extends AsyncTask<Integer, Void, RetornoDTO> {
         };
 
         Handler pdCanceller = new Handler();
+        int timer = 5000;
         pdCanceller.postDelayed(progressRunnable, timer);
     }
 
@@ -105,8 +104,6 @@ public class SincronizaTask extends AsyncTask<Integer, Void, RetornoDTO> {
                 return true;
             }
 
-        } catch (MalformedURLException e) {
-            Log.e("SincronizaTask", "error", e);
         } catch (IOException e) {
             Log.e("SincronizaTask", "error", e);
         }

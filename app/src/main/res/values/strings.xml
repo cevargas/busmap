@@ -8,4 +8,7 @@
     <string name="search_title">Pesquisar</string>
     <string name="mn_sincronizar">Sincronizar</string>
     <string name="mn_voltar">Voltar</string>
+    <string name="text_inicio">Inicio</string>
+    <string name="text_centro">Centro</string>
+    <string name="text_fim">Fim</string>
 </resources>
