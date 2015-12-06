@@ -74,6 +74,31 @@ public class LinhasOnibusDAO {
 
     }
 
+    public List<LinhasOnibus> pesquisaLinhasOnibus(String field, String value) {
+
+        List<LinhasOnibus> lista = new ArrayList<>();
+
+        SQLiteDatabase db = new DBHelper(context).getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABELA+" WHERE "+field+" LIKE '%"+value+"%'", null);
+        while(cursor.moveToNext()) {
+
+            LinhasOnibus linhaOnibus = new LinhasOnibus();
+
+            linhaOnibus.setId(cursor.getInt(cursor.getColumnIndex(ID)));
+            linhaOnibus.setNome(cursor.getString(cursor.getColumnIndex(NOME)));
+            linhaOnibus.setTrajeto(cursor.getString(cursor.getColumnIndex(TRAJETO)));
+            linhaOnibus.setMapa(cursor.getString(cursor.getColumnIndex(MAPA)));
+
+            lista.add(linhaOnibus);
+        }
+
+        cursor.close();
+        db.close();
+
+        return lista;
+    }
+
     public void salvar(RetornoDTO retornoDTO) {
 
         SQLiteDatabase db = new DBHelper(context).getReadableDatabase();

@@ -1,7 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WebView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webViewTrajeto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapaActivity"
+    android:orientation="vertical">
 
-</WebView>
+    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webViewTrajeto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </WebView>
+
+    <ProgressBar
+        android:id="@+id/progress_webview"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

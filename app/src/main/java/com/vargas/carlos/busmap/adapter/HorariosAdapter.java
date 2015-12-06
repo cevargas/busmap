@@ -1,7 +1,6 @@
 package com.vargas.carlos.busmap.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ public class HorariosAdapter extends ArrayAdapter<HorarioTrajetoReferenciaLinhas
 
         final HorarioTrajetoReferenciaLinhasOnibus horarioTrajetoReferenciaLinhasOnibus = getItem(position);
 
-        Log.i("HorariosAdapter", "Caiu em setar os Horarios " + horarioTrajetoReferenciaLinhasOnibus.getInicializador());
+        //Log.i("HorariosAdapter", "Caiu em setar os Horarios " + horarioTrajetoReferenciaLinhasOnibus.getInicializador());
 
         ((TextView) row.findViewById(R.id.textInicializador)).setText(horarioTrajetoReferenciaLinhasOnibus.getInicializador());
         ((TextView) row.findViewById(R.id.textCentralizador)).setText(horarioTrajetoReferenciaLinhasOnibus.getCentralizado());

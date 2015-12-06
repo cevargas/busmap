@@ -41,13 +41,6 @@ public class AbstractActivity extends AppCompatActivity {
             }
         });
 
-        /*btn_negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });*/
-
         dialog.show();
     }
 

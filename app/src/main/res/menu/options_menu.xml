@@ -13,4 +13,8 @@
         android:id="@+id/sincronizar"
         android:title="@string/mn_sincronizar"/>
 
+    <item
+        android:id="@+id/voltar"
+        android:title="@string/mn_voltar"/>
+
 </menu>

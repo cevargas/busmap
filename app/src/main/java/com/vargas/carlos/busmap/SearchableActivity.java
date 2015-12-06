@@ -17,68 +17,29 @@ import android.widget.TextView;
 import com.vargas.carlos.busmap.adapter.ListaOnibusAdapter;
 import com.vargas.carlos.busmap.dao.LinhasOnibusDAO;
 import com.vargas.carlos.busmap.model.LinhasOnibus;
-import com.vargas.carlos.busmap.task.SincronizaTask;
 
 import java.util.List;
 
-public class MainActivity extends AbstractActivity {
-
-    static String URL = "http://busmap.moblin.com.br/api";
-
-    static final int REQ_ACTIVITY_HORARIOS = 1;
-    static final int REQ_ACTIVITY_TRAJETOS = 1;
+public class SearchableActivity extends AbstractActivity {
 
     private LinhasOnibus linhaOnibus;
+
+    static final int REQ_ACTIVITY_HORARIOS = 2;
+    static final int REQ_ACTIVITY_TRAJETOS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //busca lista de linhas de onibus
-        List<LinhasOnibus> list = new LinhasOnibusDAO(this).listar();
-
-        //se a lista nao estiver vazia..carrega os dados do banco
-        if(!list.isEmpty()) {
-
-            final ListaOnibusAdapter adapter = new ListaOnibusAdapter(this, list);
-            final ListView listOnibus = (ListView) findViewById(R.id.listOnibus);
-            listOnibus.setAdapter(adapter);
-
-            listOnibus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    linhaOnibus = (LinhasOnibus) parent.getItemAtPosition(position);
-                    parent.showContextMenuForChild(view);
-                }
-            });
-
-            registerForContextMenu(listOnibus);
-
-        }
-        else {
-            //se nao, verifica se a conexao de internet esta disponivel
-            if (isConnected()) {
-                //se tiver, busca os dados da api
-                new SincronizaTask(URL, this).execute();
-            }
-            else {
-                alert();
-
-                TextView text = (TextView) findViewById(R.id.noresult);
-                text.setText("Nenhuma informação para listar.");
-            }
-        }
+        handleIntent(getIntent());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        // Inflate menu to add items to action bar if it is present.
         inflater.inflate(R.menu.options_menu, menu);
-        // Associate searchable configuration with the SearchView
+
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
@@ -90,10 +51,49 @@ public class MainActivity extends AbstractActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+
+            List<LinhasOnibus> linhasOnibus = new LinhasOnibusDAO(this).pesquisaLinhasOnibus(LinhasOnibusDAO.NOME, query);
+
+            if(!linhasOnibus.isEmpty()) {
+                final ListaOnibusAdapter adapter = new ListaOnibusAdapter(this, linhasOnibus);
+                final ListView listOnibus = (ListView) findViewById(R.id.listOnibus);
+                listOnibus.setAdapter(adapter);
+
+                listOnibus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        linhaOnibus = (LinhasOnibus) parent.getItemAtPosition(position);
+                        parent.showContextMenuForChild(view);
+                    }
+                });
+
+                registerForContextMenu(listOnibus);
+            }
+            else {
+
+                TextView text = (TextView) findViewById(R.id.noresult);
+                text.setText("Nenhuma informação para listar.");
+            }
+        }
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        MenuItem register = menu.findItem(R.id.voltar);
+        MenuItem register = menu.findItem(R.id.sincronizar);
         register.setVisible(false);
+
+        MenuItem register2 = menu.findItem(R.id.voltar);
+        register2.setVisible(true);
         return true;
     }
 
@@ -102,14 +102,9 @@ public class MainActivity extends AbstractActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.sincronizar:
-                if (isConnected()) {
-                    new SincronizaTask(URL, this).execute();
-                }
-                else {
-                    alert();
-                }
-
+            case R.id.voltar:
+                Intent intent = new Intent(SearchableActivity.this, MainActivity.class);
+                startActivity(intent);
             default:
                 break;
         }
@@ -124,7 +119,7 @@ public class MainActivity extends AbstractActivity {
         horarios.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(MainActivity.this, HorariosActivity.class);
+                Intent intent = new Intent(SearchableActivity.this, HorariosActivity.class);
                 intent.putExtra("idHorario", linhaOnibus.getId());
                 startActivityForResult(intent, REQ_ACTIVITY_HORARIOS);
 
@@ -136,7 +131,7 @@ public class MainActivity extends AbstractActivity {
         trajetos.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(MainActivity.this, MapaActivity.class);
+                Intent intent = new Intent(SearchableActivity.this, MapaActivity.class);
                 intent.putExtra("idMapa", linhaOnibus.getId());
                 startActivityForResult(intent, REQ_ACTIVITY_TRAJETOS);
 
